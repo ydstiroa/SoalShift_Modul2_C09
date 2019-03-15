@@ -42,6 +42,10 @@ int main() {
   close(STDIN_FILENO);
   close(STDOUT_FILENO);
   close(STDERR_FILENO);
+	FILE * gpid;
+	gpid = fopen ("/home/yudhis/Documents/gpid.txt", "w+");
+	fprintf(gpid, "%d",getpid());
+	fclose(gpid);
 
   while(1) {
 	time_t t=time(NULL);
@@ -75,7 +79,7 @@ int main() {
 	}
 //	while ((wait(&status)) > 0);
 //	kill(child, SIGKILL);
-sleep(60);
+sleep(1);
 	
   }
   

@@ -22,7 +22,7 @@ Pertama buka directory yang mengandung file .png dengan menggunakan
         closedir(d);
     }
 
-Setelah itu untuk mengetahui bagaimana caranya mencari semua yang mempuinya ekstensi .png adalah dengan cara menghitung panjang stringnya dan membacanya dari belakang lalu di compare jika sama dengan .jpg maka akan di ambil dan di concat dengan string yang mengandung directory tujuan. concat kembali hasil sebelumnya dengan string "_ grey.png". untuk menghapus file dengan ekstensi .png juga dilakukan dengan membaca panjang stringnya dari belakang dan dibuat kosong dengan "\0". hasil yabg sudah di concat dan di ubah dengan namanya di move ke folder yang dituju.
+Setelah itu untuk mengetahui bagaimana caranya mencari semua yang mempuinya ekstensi .png adalah dengan cara menghitung panjang stringnya dan membacanya dari belakang lalu di compare jika sama dengan .jpg maka akan di ambil dan di concat dengan string yang mengandung directory tujuan. concat kembali hasil sebelumnya dengan string "_ grey.png". untuk menghapus file dengan ekstensi .png juga dilakukan dengan membaca panjang stringnya dari belakang dan dibuat kosong dengan "\0". hasil yabg sudah di concat dan di ubah dengan namanya di move ke folder yang dituju. (Gunakan daemon untuk automasinya)
 
      char namaFile[500];
           int len = (int) strlen(dir->d_name);
@@ -32,7 +32,7 @@ Setelah itu untuk mengetahui bagaimana caranya mencari semua yang mempuinya ekst
         strcpy(namaFile, "/home/yudhis/Documents/modul2/gambar/");
         strcat(namaFile, name);
         len = (int)strlen(namaFile);
-        namaFile[len-4] = '\0';
+        namaFile[len-4] = '\0'; //delete file
         strcat(namaFile, "_grey.png");
         if(fork()==0){
         char *argv[] = {"mv", name, namaFile, NULL};
@@ -40,6 +40,82 @@ Setelah itu untuk mengetahui bagaimana caranya mencari semua yang mempuinya ekst
         }
         printf("%s\n", namaFile);
           }
+          
+Code lengkapnya :
+        
+        #include <sys/types.h>
+        #include <sys/stat.h>
+        #include <stdio.h>
+        #include <stdlib.h>
+        #include <fcntl.h>
+        #include <errno.h>
+        #include <unistd.h>
+        #include <syslog.h>
+        #include <string.h>
+        #include <dirent.h>
+
+        int main() {
+          pid_t pid, sid;
+
+          pid = fork();
+
+          if (pid < 0) {
+            exit(EXIT_FAILURE);
+          }
+
+          if (pid > 0) {
+            exit(EXIT_SUCCESS);
+          }
+
+          umask(0);
+
+          sid = setsid();
+
+          if (sid < 0) {
+            exit(EXIT_FAILURE);
+          }
+
+          if ((chdir("/home/yudhis/Documents/")) < 0) {
+            exit(EXIT_FAILURE);
+          }
+
+          close(STDIN_FILENO);
+          close(STDOUT_FILENO);
+          close(STDERR_FILENO);
+
+          while(1) {
+           DIR *d;
+            struct dirent *dir;
+            d = opendir("/home/yudhis/Documents/");
+
+            if (d)
+            {
+                while ((dir = readdir(d)) != NULL)
+                {
+                char namaFile[500];
+                int len = (int) strlen(dir->d_name);
+                char *name = dir->d_name;
+                if(name[len-1] == 'g' && name[len-2] == 'n' && name[len-3] == 'p' && name[len-4] == '.'){
+                        printf("%s %d\n", dir->d_name, (int) strlen(dir->d_name));
+                strcpy(namaFile, "/home/yudhis/Documents/modul2/gambar/");
+                strcat(namaFile, name);
+                len = (int)strlen(namaFile);
+                namaFile[len-4] = '\0';
+                strcat(namaFile, "_grey.png");
+                if(fork()==0){
+                char *argv[] = {"mv", name, namaFile, NULL};
+                execv("/bin/mv", argv);
+                }
+                printf("%s\n", namaFile);
+                }
+                }
+                closedir(d);
+            }
+            sleep(5);
+          }
+
+          exit(EXIT_SUCCESS);
+        }
 
 ## No 2
 Pada suatu hari Kusuma dicampakkan oleh Elen karena Elen dimenangkan oleh orang lain. Semua kenangan tentang Elen berada pada file bernama “elen.ku” pada direktori “hatiku”. Karena sedih berkepanjangan, tugas kalian sebagai teman Kusuma adalah membantunya untuk menghapus semua kenangan tentang Elen dengan membuat program C yang bisa mendeteksi owner dan group dan menghapus file “elen.ku” setiap 3 detik dengan syarat ketika owner dan grupnya menjadi “www-data”. Ternyata kamu memiliki kendala karena permission pada file “elen.ku”. Jadi, ubahlah permissionnya menjadi 777. Setelah kenangan tentang Elen terhapus, maka Kusuma bisa move on.

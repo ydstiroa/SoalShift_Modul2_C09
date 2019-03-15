@@ -49,9 +49,11 @@ int main() {
     struct passwd *pw = getpwuid(ls.st_uid);
     struct group  *gr = getgrgid(ls.st_gid);
 
-    if(((strcmp(pw->pw_name,tname))==0) && ((strcmp(gr->gr_name,tname))==0))
-	{
-		remove(dpath);
+    if(((strcmp(pw->pw_name,tname))==0)){
+	if(((strcmp(gr->gr_name,tname))==0))
+		{
+			remove(dpath);
+		}
 	}
     sleep(3);
   }

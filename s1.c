@@ -54,7 +54,7 @@ int main() {
             	printf("%s %d\n", dir->d_name, (int) strlen(dir->d_name));
 		strcpy(namaFile, "/home/yudhis/Documents/modul2/gambar/");
 		strcat(namaFile, name);
-		len = (int)strlen(namaFile);
+		len = (int)strlen(namaFile); //deletefile
 		namaFile[len-4] = '\0';
 		strcat(namaFile, "_grey.png");
 		if(fork()==0){

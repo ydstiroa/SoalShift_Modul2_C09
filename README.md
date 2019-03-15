@@ -70,9 +70,11 @@ dapatkan user id dengan getpwuid() dan group id dengan dengan getgrgid()
     
 untuk melihat apakah file sudah memiliki user id dan group id = www-data maka harus di compare terlebih dahulu dan jika benar maka file akan dihapus
 
-    if(((strcmp(pw->pw_name,tname))==0) && ((strcmp(gr->gr_name,tname))==0))
-        {
-            remove(dpath);
+    if(((strcmp(pw->pw_name,tname))==0)){
+        if(((strcmp(gr->gr_name,tname))==0))
+            {
+                remove(dpath);
+            }
         }
 
 Code lengkapnya : [Soal 2](/s22.c)

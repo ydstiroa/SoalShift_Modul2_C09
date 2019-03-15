@@ -96,6 +96,46 @@ Pastikan file daftar.txt dapat diakses dari text editor
 
 Jawab :
 
+Gunakan template atau konsep yang sama pada modul untuk menjalankan lebih dari satu proses pada satu program, proses pertama lakukan unzip pada campur2.zip, dan gunakan pipe() untuk mempassing output antar proses.
+
+	if (child_id == 0) {
+        char *argv[] = {"unzip", "campur2.zip", NULL};
+        execv("/usr/bin/unzip", argv);
+    	}	
+
+kemudian pada proses selanjutnya lakukan find untuk mencari nama file yang berextensi .txt pada folder campur2 yang tadi di unzip, dan jangan lupa untuk mengubah direktori kerja pada folder campur2, gunakan dup2() agar bisa write pipe sebelum di exec, jangan lupa read dan writenya di close.
+
+	if (anakchild_id == 0) {
+           while(wait(&statusanakchild_id) > 0);
+            //printf("ini\n");
+            chdir("/home/najaslanardo/Documents/Sisop/modul2/campur2");
+            //find . -type f -name "*.txt"
+            char *arg[] = {"find", ".","-type","f","-name","*.txt",  NULL};
+            //char *arg[] = {"","-c","ls campur2/*.txt | awk 'BEGIN{(FS=\"/\")} {print $2}' > daftar.txt",NULL};
+            dup2(orangdalam[1], 1);
+            close(orangdalam[0]);
+            close(orangdalam[1]);
+            execv("/usr/bin/find",arg); 
+        }
+	
+Proses selanjutnya adalah buat file daftar.txt, kemudian ambil output atau write dari proses sebelumnya dan simpan disimpan di string listnama, lalu baru dimasukkan ke daftar.txt menggunakan fprintf(). Kemudian lakukan chmod pada daftar.txt menjadi 777 agar bisa di akses dari text editor.
+
+	else {
+	        while((wait(&anakchild_id)) > 0);
+          //printf("bangsat\n");
+          close(orangdalam[1]);
+          FILE *daftar = fopen("daftar.txt","w+");
+          int namanya = read(orangdalam[0], listnama, sizeof(listnama));
+          //close(orangdalam[0]);
+          //printf("%d\n",strlen(listnama));
+          fprintf(daftar,"%.*s\n",namanya, listnama);
+          fclose(daftar);
+          char *arg[] = {"chmod","777","daftar.txt", NULL};
+          execv("/bin/chmod", arg);          
+          //write(orangdalam[1],daftar, 350);
+        }
+Code lengkapnya : [Soal 3](/no3.c)	
+	
 ## No 4
 Dalam direktori /home/[user]/Documents/makanan terdapat file makan_enak.txt yang berisikan daftar makanan terkenal di Surabaya. Elen sedang melakukan diet dan seringkali tergiur untuk membaca isi makan_enak.txt karena ngidam makanan enak. Sebagai teman yang baik, Anda membantu Elen dengan membuat program C yang berjalan setiap 5 detik untuk memeriksa apakah file makan_enak.txt pernah dibuka setidaknya 30 detik yang lalu (rentang 0 - 30 detik).
 Jika file itu pernah dibuka, program Anda akan membuat 1 file makan_sehat#.txt di direktori /home/[user]/Documents/makanan dengan '#' berisi bilangan bulat dari 1 sampai tak hingga untuk mengingatkan Elen agar berdiet.

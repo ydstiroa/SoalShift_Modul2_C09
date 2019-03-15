@@ -49,6 +49,34 @@ Catatan: Tidak boleh menggunakan crontab
 
 Jawab :
 
+Pertama inisialisasi variable struct stat perlu diketahui bahwa struct stat digunakan untuk mengambil nilai st_uid (User id ), dan st_gid (Group id)
+    
+    struct stat ls;
+
+
+Masukkan tujuan directory ke dalam char dan juga masukkan "www-data" kedalam char 
+
+    char dpath[50]="/home/yudhis/Documents/hatiku/elen.ku";
+    char tname[20]="www-data";
+    
+Gunakan stat untuk mendapatkan informasi
+    
+    stat(dpath, &ls);
+    
+dapatkan user id dengan getpwuid() dan group id dengan dengan getgrgid()
+    
+    struct passwd *pw = getpwuid(ls.st_uid);
+    struct group  *gr = getgrgid(ls.st_gid);
+    
+untuk melihat apakah file sudah memiliki user id dan group id = www-data maka harus di compare terlebih dahulu dan jika benar maka file akan dihapus
+
+    if(((strcmp(pw->pw_name,tname))==0) && ((strcmp(gr->gr_name,tname))==0))
+        {
+            remove(dpath);
+        }
+
+
+
 ## No 3
 Diberikan file campur2.zip. Di dalam file tersebut terdapat folder “campur2”. 
 Buatlah program C yang dapat :

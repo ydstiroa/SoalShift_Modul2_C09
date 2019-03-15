@@ -164,3 +164,4 @@ Hal yang penting selanjutnya adalah menentukan path destinationnya (diperlukan u
     strcat(dpath,data);
 	strcat(dpath,"/");
     
+Code lengkapnya : [Soal 5](/s5.c)

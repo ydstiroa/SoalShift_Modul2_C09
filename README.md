@@ -106,6 +106,30 @@ Contoh nama file : makan_sehat1.txt, makan_sehat2.txt, dst
 
 Jawab :
 
+Pertama inisialisasi variable struct stat perlu diketahui bahwa struct stat digunakan untuk mengambil nilai
+
+    struct stat file_status;
+    stat("/home/najaslanardo/Documents/makanan/makan_enak.txt",&file_status);
+    
+cek apakah file pernah dibuka setidaknya dalam 30 detik. lalu buat variable char yang berisi tujuan dan buat juga variable char baru untuk menampung increment dimana di inisialisasi = 1 dan concat kedua char tersebut. setelah itu open file yang sudah di concat read lalu lakukan write didalam file tersebut. jika sudah close file
+
+	if(file_status.st_atime + 30 > time(NULL)){int ingatdiet =1;
+      while(1){
+        char tempstr[50]= "";
+        char newfile[350] = "/home/najaslanardo/Documents/makanan/makan_sehat";
+        sprintf(tempstr,"%d.txt",ingatdiet);strcat(newfile, tempstr);
+        FILE *temp = fopen(newfile, "r");
+        if(!temp){
+          FILE *temp1 = fopen(newfile,"w");
+          fclose(temp1);break;
+        }
+        fclose(temp);
+        ingatdiet++;
+      }
+    }
+
+Code lengkapnya : [Soal 4](/s4.c)
+
 ## No 5
 Kerjakan poin a dan b di bawah:
 

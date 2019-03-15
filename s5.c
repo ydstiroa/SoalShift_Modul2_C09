@@ -54,7 +54,7 @@ int main() {
 	char dpath[100]= "/home/yudhis/Documents/";
 	static int i = 0;
 
-	if(i%1800==0){
+	if(i%30==0){
 	sprintf(waktu,"%d-%d-%d-%d:%d",tm.tm_mday,tm.tm_mon + 1,tm.tm_year + 1900,tm.tm_hour, tm.tm_min);
 	printf("%s\n",waktu);
 	}
@@ -79,7 +79,7 @@ int main() {
 	}
 //	while ((wait(&status)) > 0);
 //	kill(child, SIGKILL);
-sleep(1);
+sleep(60);
 	
   }
   

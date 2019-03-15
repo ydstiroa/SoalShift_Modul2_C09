@@ -163,5 +163,36 @@ Hal yang penting selanjutnya adalah menentukan path destinationnya (diperlukan u
     strcat(dpath,waktu);
     strcat(dpath,data);
 	strcat(dpath,"/");
+	
+untuk melanjutkan ke soal b maka harus didapatkan terlebih dahulu pid dari program yang dijalankan dengan membuka directorynya dan menuliskan nomor pidnya dan disimpan kedalam sebuah file dengan ekstensi .txt (disini diberi nama "gpid.txt")
+
+	FILE * gpid;
+		gpid = fopen ("/home/yudhis/Documents/gpid.txt", "w+");
+		fprintf(gpid, "%d",getpid());
+		fclose(gpid);
     
 Code lengkapnya : [Soal 5](/s5.c)
+
+b. Untuk menghentikan program yang dijalankan pada sebelumnya maka kita harus membuka file yang telah dibuat pada program sebelumnya berupa "gpid.txt" lalu dimasukkan kedalam sebuah variable. setelah itu yang harus dilakukan adalah kill angka pid yang didapat dengan menjalankan fungsi kill, lalu jika sudah di kill maka file tersebut di remove.
+
+	#include <stdio.h>
+	#include <stdlib.h>
+	#include <sys/types.h>
+	#include <sys/stat.h>
+	#include <error.h>
+	#include <signal.h>
+	#include <unistd.h>
+	#include <syslog.h>
+
+	int main()
+	{
+	  pid_t npid;
+		FILE * gpid;
+
+		gpid = fopen ("gpid.txt", "r");
+		fscanf(gpid, "%d", &npid);
+		kill(npid,SIGKILL);
+		remove("npid.txt");
+		fclose(gpid);
+		return 0;
+	}

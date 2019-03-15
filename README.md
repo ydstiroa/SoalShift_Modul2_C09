@@ -175,17 +175,6 @@ Code lengkapnya : [Soal 5a](/s5.c)
 
 b. Untuk menghentikan program yang dijalankan pada sebelumnya maka kita harus membuka file yang telah dibuat pada program sebelumnya berupa "gpid.txt" lalu dimasukkan kedalam sebuah variable. setelah itu yang harus dilakukan adalah kill angka pid yang didapat dengan menjalankan fungsi kill, lalu jika sudah di kill maka file tersebut di remove.
 
-	#include <stdio.h>
-	#include <stdlib.h>
-	#include <sys/types.h>
-	#include <sys/stat.h>
-	#include <error.h>
-	#include <signal.h>
-	#include <unistd.h>
-	#include <syslog.h>
-
-	int main()
-	{
 	  pid_t npid;
 		FILE * gpid;
 
@@ -194,6 +183,5 @@ b. Untuk menghentikan program yang dijalankan pada sebelumnya maka kita harus me
 		kill(npid,SIGKILL);
 		remove("npid.txt");
 		fclose(gpid);
-		return 0;
-	}
+
 Code lengkapnya : [Soal 5b](/pkill.c)

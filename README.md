@@ -23,6 +23,7 @@ Gunakan minimal 3 proses yang diakhiri dengan exec.
 Gunakan pipe
 Pastikan file daftar.txt dapat diakses dari text editor
 
+Jawab :
 
 ## No 4
 Dalam direktori /home/[user]/Documents/makanan terdapat file makan_enak.txt yang berisikan daftar makanan terkenal di Surabaya. Elen sedang melakukan diet dan seringkali tergiur untuk membaca isi makan_enak.txt karena ngidam makanan enak. Sebagai teman yang baik, Anda membantu Elen dengan membuat program C yang berjalan setiap 5 detik untuk memeriksa apakah file makan_enak.txt pernah dibuka setidaknya 30 detik yang lalu (rentang 0 - 30 detik).
@@ -36,6 +37,7 @@ Catatan:
 dilarang menggunakan crontab
 Contoh nama file : makan_sehat1.txt, makan_sehat2.txt, dst
 
+Jawab :
 
 ## No 5
 Kerjakan poin a dan b di bawah:
@@ -51,3 +53,5 @@ Kerjakan poin a dan b di bawah:
   
   b. Buatlah program c untuk menghentikan program di atas.
 NB: Dilarang menggunakan crontab dan tidak memakai argumen ketika menjalankan program.
+
+Jawab :

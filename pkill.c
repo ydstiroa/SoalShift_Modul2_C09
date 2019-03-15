@@ -15,7 +15,6 @@ int main()
 	gpid = fopen ("gpid.txt", "r");
 	fscanf(gpid, "%d", &npid);
 	kill(npid,SIGKILL);
-	remove("npid.txt");
 	fclose(gpid);
 	return 0;
 }

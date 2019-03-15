@@ -1,7 +1,7 @@
 # SoalShift_Modul2_C09
 
 ## Oleh
-   * Najatul Muslis Dinantra	05111740000079
+   * Najatul Muslim Dinatra	05111740000079
    * Yudhistiro Adi Nugroho	05111740000165
 
 ### No 1

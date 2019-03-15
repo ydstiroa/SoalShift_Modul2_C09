@@ -131,4 +131,36 @@ a. Pertama-tama cari tahu bagaimana caranya mendapatkan current time maka diguna
     struct tm tm = *localtime(&t);
 
     printf("now: %d-%d-%d %d:%d:%d\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+    
+setelah itu masukkan current date keadalam sebuah variable yang akan terus diupdate setelah 30 menit
 
+    if(i%1800==0){
+        sprintf(waktu,"%d-%d-%d-%d:%d",tm.tm_mday,tm.tm_mon + 1,tm.tm_year + 1900,tm.tm_hour, tm.tm_min);
+        printf("%s\n",waktu);
+        }
+
+Buat folder dengan format current date agar saat di exec program tidak berhenti maka harus memanggil fungsi fork()
+
+    child = fork();
+	if(child==0){
+		char *argv[] = {"mkdir", waktu, NULL};
+		execv("/bin/mkdir", argv);
+	}
+    
+Buat file yang diarahkan pada folder yang telah dibuat sebelumnya dengan format nama "log#.log" dimana tiap menit file tersebut akan terus bertambah dan jangan lupa untuk mencatat lognya dari /var/log/syslog . 
+
+    if(child==0){
+        sprintf(data,"log%d.log",i);
+        strcat(dpath,data);
+        char *argv[] = {"cp", "/var/log/syslog",dpath, NULL};
+            execv("/bin/cp", argv);
+        }
+
+Hal yang penting selanjutnya adalah menentukan path destinationnya (diperlukan untuk membuat file nantinya) gunakan concat berikut adalah potongan alur concat
+
+    char dpath[100]= "/home/yudhis/Documents/";
+    sprintf(waktu,"%d-%d-%d-%d:%d",tm.tm_mday,tm.tm_mon + 1,tm.tm_year + 1900,tm.tm_hour, tm.tm_min);
+    strcat(dpath,waktu);
+    strcat(dpath,data);
+	strcat(dpath,"/");
+    

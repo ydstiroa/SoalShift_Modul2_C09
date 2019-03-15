@@ -171,7 +171,7 @@ untuk melanjutkan ke soal b maka harus didapatkan terlebih dahulu pid dari progr
 		fprintf(gpid, "%d",getpid());
 		fclose(gpid);
     
-Code lengkapnya : [Soal 5](/s5.c)
+Code lengkapnya : [Soal 5a](/s5.c)
 
 b. Untuk menghentikan program yang dijalankan pada sebelumnya maka kita harus membuka file yang telah dibuat pada program sebelumnya berupa "gpid.txt" lalu dimasukkan kedalam sebuah variable. setelah itu yang harus dilakukan adalah kill angka pid yang didapat dengan menjalankan fungsi kill, lalu jika sudah di kill maka file tersebut di remove.
 
@@ -196,3 +196,4 @@ b. Untuk menghentikan program yang dijalankan pada sebelumnya maka kita harus me
 		fclose(gpid);
 		return 0;
 	}
+Code lengkapnya : [Soal 5b](/pkill.c)

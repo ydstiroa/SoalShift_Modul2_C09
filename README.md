@@ -109,16 +109,26 @@ Jawab :
 ## No 5
 Kerjakan poin a dan b di bawah:
 
-  a. Buatlah program c untuk mencatat log setiap menit dari file log pada syslog ke /home/[user]/log/[dd:MM:yyyy-hh:mm]/log#.log
+a.Buatlah program c untuk mencatat log setiap menit dari file log pada syslog ke /home/[user]/log/[dd:MM:yyyy-hh:mm]/log#.log
   Ket:
   
-  -Per 30 menit membuat folder /[dd:MM:yyyy-hh:mm]
+   -Per 30 menit membuat folder /[dd:MM:yyyy-hh:mm]
   
-  -Per menit memasukkan log#.log ke dalam folder tersebut
+   -Per menit memasukkan log#.log ke dalam folder tersebut
   
-  ‘#’ : increment per menit. Mulai dari 1
+   ‘#’ : increment per menit. Mulai dari 1
   
-  b. Buatlah program c untuk menghentikan program di atas.
+b.Buatlah program c untuk menghentikan program di atas.
 NB: Dilarang menggunakan crontab dan tidak memakai argumen ketika menjalankan program.
 
 Jawab :
+
+a. Pertama-tama cari tahu bagaimana caranya mendapatkan current time maka digunakan 
+
+    #include <time.h>
+
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+
+    printf("now: %d-%d-%d %d:%d:%d\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+

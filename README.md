@@ -160,7 +160,7 @@ a. Pertama-tama cari tahu bagaimana caranya mendapatkan current time maka diguna
 
     printf("now: %d-%d-%d %d:%d:%d\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
     
-setelah itu masukkan current date keadalam sebuah variable yang akan terus diupdate setelah 30 menit
+setelah itu masukkan current date kedalam sebuah variable yang akan terus diupdate setelah 30 menit
 
     if(i%1800==0){
         sprintf(waktu,"%d-%d-%d-%d:%d",tm.tm_mday,tm.tm_mon + 1,tm.tm_year + 1900,tm.tm_hour, tm.tm_min);

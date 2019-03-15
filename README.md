@@ -75,7 +75,7 @@ untuk melihat apakah file sudah memiliki user id dan group id = www-data maka ha
             remove(dpath);
         }
 
-
+Code lengkapnya : [Soal 2](/s22.c)
 
 ## No 3
 Diberikan file campur2.zip. Di dalam file tersebut terdapat folder “campur2”. 

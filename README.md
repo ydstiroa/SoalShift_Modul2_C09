@@ -6,6 +6,41 @@ Catatan : Tidak boleh menggunakan crontab.
 
 Jawab :
 
+Pertama buka directory yang mengandung file .png dengan menggunakan 
+
+    DIR *d;
+    
+    struct dirent *dir;
+    d = opendir("/home/yudhis/Documents/");
+
+    if (d)
+    {
+        while ((dir = readdir(d)) != NULL)
+        {
+            
+        }
+        closedir(d);
+    }
+
+Setelah itu untuk mengetahui bagaimana caranya mencari semua yang mempuinya ekstensi .png adalah dengan cara menghitung panjang stringnya dan membacanya dari belakang lalu di compare jika sama dengan .jpg maka akan di ambil dan di concat dengan string yang mengandung directory tujuan. concat kembali hasil sebelumnya dengan string "_ grey.png". untuk menghapus file dengan ekstensi .png juga dilakukan dengan membaca panjang stringnya dari belakang dan dibuat kosong dengan "\0". hasil yabg sudah di concat dan di ubah dengan namanya di move ke folder yang dituju.
+
+     char namaFile[500];
+          int len = (int) strlen(dir->d_name);
+          char *name = dir->d_name;
+          if(name[len-1] == 'g' && name[len-2] == 'n' && name[len-3] == 'p' && name[len-4] == '.'){
+                  printf("%s %d\n", dir->d_name, (int) strlen(dir->d_name));
+        strcpy(namaFile, "/home/yudhis/Documents/modul2/gambar/");
+        strcat(namaFile, name);
+        len = (int)strlen(namaFile);
+        namaFile[len-4] = '\0';
+        strcat(namaFile, "_grey.png");
+        if(fork()==0){
+        char *argv[] = {"mv", name, namaFile, NULL};
+        execv("/bin/mv", argv);
+        }
+        printf("%s\n", namaFile);
+          }
+
 ## No 2
 Pada suatu hari Kusuma dicampakkan oleh Elen karena Elen dimenangkan oleh orang lain. Semua kenangan tentang Elen berada pada file bernama “elen.ku” pada direktori “hatiku”. Karena sedih berkepanjangan, tugas kalian sebagai teman Kusuma adalah membantunya untuk menghapus semua kenangan tentang Elen dengan membuat program C yang bisa mendeteksi owner dan group dan menghapus file “elen.ku” setiap 3 detik dengan syarat ketika owner dan grupnya menjadi “www-data”. Ternyata kamu memiliki kendala karena permission pada file “elen.ku”. Jadi, ubahlah permissionnya menjadi 777. Setelah kenangan tentang Elen terhapus, maka Kusuma bisa move on.
 Catatan: Tidak boleh menggunakan crontab

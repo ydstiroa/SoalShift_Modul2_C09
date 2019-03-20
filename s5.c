@@ -35,7 +35,7 @@ int main() {
     exit(EXIT_FAILURE);
   }
 
-  if ((chdir("/home/yudhis/Documents")) < 0) {
+  if ((chdir("/home/najaslanardo/Documents")) < 0) {
     exit(EXIT_FAILURE);
   }
 
@@ -43,43 +43,45 @@ int main() {
   close(STDOUT_FILENO);
   close(STDERR_FILENO);
 	FILE * gpid;
-	gpid = fopen ("/home/yudhis/Documents/gpid.txt", "w+");
+	gpid = fopen ("/home/najaslanardo/Documents/gpid.txt", "w+");
 	fprintf(gpid, "%d",getpid());
 	fclose(gpid);
 
+int i =0;
+char waktu[50];
   while(1) {
 	time_t t=time(NULL);
 	struct tm tm = *localtime(&t);
-	char waktu[50];
-	char dpath[100]= "/home/yudhis/Documents/";
-	static int i = 0;
+	char dpath[100]= "/home/najaslanardo/Documents/";
+  i = i % 30;
+	if(i==0){
+	    sprintf(waktu,"%d-%d-%d-%d:%d",tm.tm_mday,tm.tm_mon + 1,tm.tm_year + 1900,tm.tm_hour, tm.tm_min);
+	    printf("%s\n",waktu);
 
-	if(i%30==0){
-	sprintf(waktu,"%d-%d-%d-%d:%d",tm.tm_mday,tm.tm_mon + 1,tm.tm_year + 1900,tm.tm_hour, tm.tm_min);
-	printf("%s\n",waktu);
-	}
-	i++;	
-	child = fork();
-	if(child==0){
-		char *argv[] = {"mkdir", waktu, NULL};
-		execv("/bin/mkdir", argv);
-	}
-//	while ((wait(&status)) > 0);
-//	kill(child, SIGKILL);
-
-	strcat(dpath,waktu);
-	strcat(dpath,"/");
-	char data[100];
-	child = fork();
-	if(child==0){
-	sprintf(data,"log%d.log",i);
-	strcat(dpath,data);
-	char *argv[] = {"cp", "/var/log/syslog",dpath, NULL};
-	    execv("/bin/cp", argv);
-	}
-//	while ((wait(&status)) > 0);
-//	kill(child, SIGKILL);
-sleep(60);
+    child = fork();
+	    if(child==0){
+            char *argv[] = {"mkdir", waktu, NULL};
+            execv("/bin/mkdir", argv);
+	    }else{
+            while(wait(&status)>0);
+        }
+    }else
+    {
+        strcat(dpath,waktu);
+        strcat(dpath,"/");
+        char data[100];
+        child = fork();
+        if(child==0){
+            sprintf(data,"log%d.log",i);
+            strcat(dpath,data);
+            char *argv[] = {"cp", "/var/log/syslog",dpath, NULL};
+            execv("/bin/cp", argv);
+        }else{
+            while(wait(&status)>0);
+        }
+    }
+    i++;
+    sleep(2);
 	
   }
   
